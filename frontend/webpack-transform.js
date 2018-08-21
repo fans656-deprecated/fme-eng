@@ -15,7 +15,7 @@ const config = {
     // (don't know why though)
     filename: '[name].js',
     path: path.resolve(__dirname, 'build'),
-    publicPath: '/',
+    publicPath: '/eng/',
   },
   plugins: [
     // prevent react-scripts to inject <script src="sw.js"></script>

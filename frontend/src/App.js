@@ -1,7 +1,6 @@
 import React from 'react';
 import api from './api';
 import './style.css';
-import path from './path';
 
 export default class App extends React.Component {
   state = {
@@ -17,6 +16,14 @@ export default class App extends React.Component {
 
   render() {
     const sentence = this.state.sentence;
+    const text = sentence.sentence;
+    const lines = text.split('\n').filter(line => line.length);
+    const content = lines.map((line, i) => {
+      if (line.trim().startsWith('--')) {
+        return <p className="ref" key={i}>{line}</p>;
+      }
+      return <p key={i}>{line}</p>;
+    });
     return (
       <div
         style={{
@@ -30,7 +37,7 @@ export default class App extends React.Component {
         }}
       >
         <div>
-          <p className="sentence">{sentence.sentence}</p>
+          {content}
         </div>
         <div>
           <textarea className="edit" ref={ref => this.edit = ref}/>
@@ -60,6 +67,7 @@ export default class App extends React.Component {
   rand = async () => {
     const sentence = await api.get('/api/rand/' + this.state.sentence.md5);
     if (sentence) {
+      console.log(sentence);
       this.setState({sentence: sentence});
     }
   }

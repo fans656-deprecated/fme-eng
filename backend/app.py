@@ -18,9 +18,11 @@ def after_request(r):
 
 
 @app.route('/')
-@app.route('/<string:fname>')
-def index(fname='index.html'):
-    return send_from_directory('../frontend/build', fname)
+@app.route('/<path:path>')
+def index(path='index.html'):
+    if path.startswith('eng/'):
+        path = path[len('eng/'):]
+    return send_from_directory('../frontend/build', path)
 
 
 @app.route('/api/rand')
@@ -90,6 +92,12 @@ def get_rand(md5):
         sentence = random.choice(sentences)
         if sentence['md5'] != md5:
             break
+    md5 = sentence['md5']
+    hit = sentence.get('hit', 0)
+    sentence.update({
+        'hit': hit + 1,
+    })
+    getdb().eng.update({'md5': md5}, sentence)
     return sentence
 
 
