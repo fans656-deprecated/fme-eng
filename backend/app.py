@@ -84,6 +84,8 @@ def getdb(g={}):
 def get_rand(md5):
     r = getdb().eng.find({}, {'_id': False})
     sentences = list(r)
+    if not sentences:
+        return 'empty sentences', 404
     for _ in xrange(1000):
         sentence = random.choice(sentences)
         if sentence['md5'] != md5:

@@ -59,6 +59,8 @@ export default class App extends React.Component {
 
   rand = async () => {
     const sentence = await api.get('/api/rand/' + this.state.sentence.md5);
-    this.setState({sentence: sentence});
+    if (sentence) {
+      this.setState({sentence: sentence});
+    }
   }
 }
