@@ -5,6 +5,8 @@ import hashlib
 import pymongo
 from flask import *
 
+import conf
+
 
 app = Flask(__name__, static_folder='../frontend/build')
 
@@ -90,4 +92,4 @@ def get_rand(md5):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, threaded=True, debug=conf.debug)
+    app.run(host=conf.host, port=conf.port, threaded=True, debug=conf.debug)
