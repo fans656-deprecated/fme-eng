@@ -55,6 +55,7 @@ def post_sentence():
         '_id': md5,
         'md5': md5,
         'sentence': text,
+        'ctime': datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S UTC'),
     }
     r = getdb().eng.update({'md5': md5}, sentence, upsert=True)
     if r['n'] != 1:
